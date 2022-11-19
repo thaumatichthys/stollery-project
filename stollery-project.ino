@@ -6,11 +6,6 @@ void setup() {
   // put your setup code here, to run once:
   dp.Init();
   Serial.begin(9600);
-  digitalWrite(anodes[0], HIGH);
-  digitalWrite(anodes[1], HIGH);
-  digitalWrite(anodes[2], HIGH);
-  digitalWrite(anodes[3], HIGH);
-  
 }
 
 uint16_t val0 = 0;

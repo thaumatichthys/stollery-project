@@ -1,23 +1,26 @@
 #include "Arduino.h"
 
+
+
+/*              |-|                                      |-|
+ *              | |                                      | | 
+ *              | |  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  | |
+ *              | |------------ Top down view -----------| |
+ *  Pin number  |    1  2  3  4  5  6  7  8  9  10 11 12   |
+ *  Pin type    |    K  K     K  K  A  K  A  A  K  K  A    |
+ *  Pin value   |    E  D     C  G  4  B  3  2  F  A  1    |
+ *  
+ */
+
 const uint8_t anodes[] = { // sorted from the left
   2, 3, 4, 5
 };
-
-/*
- *                           Top down view
- *                ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^  ^
- *  Pin number    1  2  3  4  5  6  7  8  9  10 11 12
- *  Pin type      K  K     K  K  A  K  A  A  K  K  A
- *  Pin value     E  D     C  G  4  B  3  2  F  A  1
- *  
- */
 
 const uint8_t cathodes[] = { // sort alphabetically
   6, 7, 8, 9, 10, 11, 12, 13
 };
 
-const uint8_t digits[] = {
+const uint8_t digits[] = { // digit "ROM" 
   0b11111100,
   0b01100000,
   0b11011010,
@@ -35,7 +38,7 @@ class DisplayDriver {
   uint8_t multiplex_state = 0;
   void WriteSegment(uint8_t segment, bool value);
   void WritePin(uint8_t pin, bool value);
-  public:
+public:
   void Init();
   void UpdateMultiplex();
   void WriteNumber(uint16_t number);
