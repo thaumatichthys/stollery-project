@@ -30,7 +30,10 @@ const uint8_t digits[] = { // digit "ROM"
   0b10111110,
   0b11100000,
   0b11111110,
-  0b11110110
+  0b11110110,
+
+  0b00011100, // 'L'
+  0           // blank digit
 };
 
 class DisplayDriver {
@@ -38,6 +41,7 @@ class DisplayDriver {
   uint8_t multiplex_state = 0;
   void WriteSegment(uint8_t segment, bool value);
   void WritePin(uint8_t pin, bool value);
+  void Multiplex(uint8_t mask[]);
 public:
   bool dot_state = false;
   bool enabled = true;
@@ -46,4 +50,6 @@ public:
   void WriteNumber(uint16_t number);
   void WriteSeconds(uint16_t n_seconds);
   void WriteDigit(uint8_t number, uint8_t digit);
+
+  void WriteLOL(bool pos);
 };

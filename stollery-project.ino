@@ -6,7 +6,7 @@ TaskScheduler DisplayMuxTask;
 TaskScheduler CountDownTask;
 TaskScheduler BlinkDisplayTask;
 
-uint16_t seconds_remaining = 35;
+uint16_t seconds_remaining = 1500;
 
 void setup() {
   dp.Init();
@@ -27,8 +27,15 @@ void DisplayMuxHandler() {
 }
 
 void CountDownHandler() {
-  seconds_remaining--;
-  dp.WriteSeconds(seconds_remaining);
+  if (seconds_remaining <= 0) {
+    DisplayMuxTask.scratch = 1 - DisplayMuxTask.scratch;
+    dp.dot_state = false;
+    dp.WriteLOL(DisplayMuxTask.scratch);
+  }
+  else {
+    seconds_remaining--;
+    dp.WriteSeconds(seconds_remaining);
+  }
 }
 
 void TimerDoneHandler() {
