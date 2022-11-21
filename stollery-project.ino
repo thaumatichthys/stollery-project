@@ -9,7 +9,7 @@ TaskScheduler BlinkDisplayTask;
 uint16_t seconds_remaining = 1500;
 
 void setup() {
-  dp.Init();
+  dp.Init(anodes, cathodes);
   DisplayMuxTask.Init(DisplayMuxHandler, 1);
   CountDownTask.Init(CountDownHandler, 1000);
   BlinkDisplayTask.Init(BlinkDisplayHandler, 500);

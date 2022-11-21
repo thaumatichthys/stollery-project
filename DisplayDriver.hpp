@@ -12,25 +12,26 @@
  *  
  */
 
+// default values
 const uint8_t anodes[] = { // sorted from the left
   2, 3, 4, 5
 };
-
+// default values
 const uint8_t cathodes[] = { // sorted alphabetically
   6, 7, 8, 9, 10, 11, 12, 13
 };
 
 const uint8_t digits[] = { // digit "ROM" 
-  0b11111100,
-  0b01100000,
-  0b11011010,
-  0b11110010,
-  0b01100110,
-  0b10110110,
-  0b10111110,
-  0b11100000,
-  0b11111110,
-  0b11110110,
+  0b11111100, // '0'
+  0b01100000, // '1'
+  0b11011010, // '2'
+  0b11110010, // '3'
+  0b01100110, // '4'
+  0b10110110, // '5'
+  0b10111110, // '6'
+  0b11100000, // '7'
+  0b11111110, // '8'
+  0b11110110, // '9'
 
   0b00011100, // 'L'
   0           // blank digit
@@ -45,7 +46,7 @@ class DisplayDriver {
 public:
   bool dot_state = false;
   bool enabled = true;
-  void Init();
+  void Init(uint8_t _anodes[], uint8_t _cathodes[]);
   void UpdateMultiplex();
   void WriteNumber(uint16_t number);
   void WriteSeconds(uint16_t n_seconds);

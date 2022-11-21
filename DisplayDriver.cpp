@@ -1,14 +1,15 @@
 #include "DisplayDriver.hpp"
 
 
-void DisplayDriver::Init() {
+void DisplayDriver::Init(uint8_t _anodes[], uint8_t _cathodes[]) {
+  // anodes is sorted from left to right, cathodes is sorted A to G, then the decimal point.
   for (int i = 0; i < sizeof(anodes); i++) {
-    pinMode(anodes[i], OUTPUT);
+    pinMode(_anodes[i], OUTPUT);
     display_buffer[i] = 0;
   }
   for (int i = 0; i < sizeof(cathodes); i++) {
-    pinMode(cathodes[i], OUTPUT);
-    this->WritePin(cathodes[i], HIGH);
+    pinMode(_cathodes[i], OUTPUT);
+    this->WritePin(_cathodes[i], HIGH);
   }
 }
 
