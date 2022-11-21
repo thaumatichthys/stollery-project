@@ -28,9 +28,7 @@ void DisplayMuxHandler() {
 
 void CountDownHandler() {
   if (seconds_remaining <= 0) {
-    DisplayMuxTask.scratch = 1 - DisplayMuxTask.scratch;
-    dp.dot_state = false;
-    dp.WriteLOL(DisplayMuxTask.scratch);
+    TimerDoneHandler();
   }
   else {
     seconds_remaining--;
@@ -40,6 +38,9 @@ void CountDownHandler() {
 
 void TimerDoneHandler() {
   // put the 'splody code here
+  DisplayMuxTask.scratch = 1 - DisplayMuxTask.scratch;
+  dp.dot_state = false;
+  dp.WriteLOL(DisplayMuxTask.scratch);
 }
 
 void loop() {
