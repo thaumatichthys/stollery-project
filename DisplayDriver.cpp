@@ -12,7 +12,8 @@ void DisplayDriver::Init() {
   }
 }
 
-void DisplayDriver::WritePin(uint8_t pin, bool value) { // around 17k times faster than digitalWrite (on average)
+void DisplayDriver::WritePin(uint8_t pin, bool value) { // around 17 times faster than digitalWrite (on average)
+  // note that this is not portable across different chips (ie this only works for ATMega328P chips and others with the same pin/port layout)
   uint8_t mask = (uint8_t) 1 << (pin % 8);
   if (pin <= 7) {
     if (value)
@@ -40,8 +41,11 @@ void DisplayDriver::UpdateMultiplex() {
   WritePin(anodes[1], LOW);
   WritePin(anodes[2], LOW);
   WritePin(anodes[3], LOW);
+  if (!this->enabled)
+    return;
   for (int i = 0; i < 4; i++) {
-    WritePin(anodes[i], ((bool) (digits[this->display_buffer[i]] & ((uint8_t) 1 << (7 - this->multiplex_state)))));
+    uint8_t digit_mask = digits[this->display_buffer[i]] | (this->dot_state ? 1U : 0);
+    WritePin(anodes[i], ((bool) (digit_mask & ((uint8_t) 1 << (7 - this->multiplex_state)))));
     this->WriteSegment(multiplex_state, LOW);
   }
   this->multiplex_state++;
@@ -54,6 +58,16 @@ void DisplayDriver::WriteNumber(uint16_t number) {
   this->display_buffer[1] = (number % 1000) / 100;
   this->display_buffer[0] = (number % 10000) / 1000;
 }
+
+void DisplayDriver::WriteSeconds(uint16_t n_seconds) {
+  uint8_t _seconds = (n_seconds % 60);
+  uint8_t _minutes = (n_seconds - _seconds) / 60;
+  this->display_buffer[3] = (_seconds % 10);
+  this->display_buffer[2] = (_seconds % 100) / 10;
+  this->display_buffer[1] = (_minutes % 10);
+  this->display_buffer[0] = (_minutes % 100) / 10;
+}
+
 
 void DisplayDriver::WriteDigit(uint8_t number, uint8_t digit) {
   this->display_buffer[digit] = number;

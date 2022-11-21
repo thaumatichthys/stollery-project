@@ -16,7 +16,7 @@ const uint8_t anodes[] = { // sorted from the left
   2, 3, 4, 5
 };
 
-const uint8_t cathodes[] = { // sort alphabetically
+const uint8_t cathodes[] = { // sorted alphabetically
   6, 7, 8, 9, 10, 11, 12, 13
 };
 
@@ -39,8 +39,11 @@ class DisplayDriver {
   void WriteSegment(uint8_t segment, bool value);
   void WritePin(uint8_t pin, bool value);
 public:
+  bool dot_state = false;
+  bool enabled = true;
   void Init();
   void UpdateMultiplex();
   void WriteNumber(uint16_t number);
+  void WriteSeconds(uint16_t n_seconds);
   void WriteDigit(uint8_t number, uint8_t digit);
 };
